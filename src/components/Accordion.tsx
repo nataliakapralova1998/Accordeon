@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface Question {
+export interface Question {
   id: number;
   title: string;
   description: string;
