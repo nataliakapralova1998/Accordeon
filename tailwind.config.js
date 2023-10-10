@@ -6,6 +6,9 @@ module.exports = {
       backgroundColor: {
         "blue-10": "var(--blue-10, #E5F7F9)",
       },
+      fontFamily: {
+        'montserrat': ['Montserrat', 'sans-serif'],
+      },
     },
   },
   plugins: [],

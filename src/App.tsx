@@ -6,7 +6,7 @@ import LoadingState from "./components/loadingstate/LoadingState";
 
 function App() {
   const [questions, setQuestions] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Add a loading state
+  const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
     async function fetchData() {
@@ -14,26 +14,26 @@ function App() {
       const firstFourQuestions = products.slice(0, 4);
 
       setQuestions(firstFourQuestions);
-      setIsLoading(false); // Set loading state to false when data is fetched
+      setIsLoading(false); 
     }
 
     const loadingTimeout = setTimeout(() => {
       fetchData();
     }, 1000);
 
-    return () => clearTimeout(loadingTimeout); // Cleanup the timeout on unmount
+    return () => clearTimeout(loadingTimeout);
   }, []);
 
   return (
-    <div className=" flex items-center justify-center  min-h-screen">
-      <div className="flez flex-col max-w-[729px] w-full">
-        <h1 className="text-[24px] font-bold ">Veelgestelde vragen</h1>
+    <div className="flex items-center justify-center  min-h-screen">
+      <div className="max-w-[729px] w-full p-4">
+        <h2>Veelgestelde vragen</h2>
         {isLoading ? (
           <LoadingState />
         ) : questions.length ? (
           <Accordion questions={questions} />
         ) : (
-          "No data"
+          <p> "Ooops" </p>
         )}
         <Button showArrow={true}> Bekijk alle vragen</Button>
       </div>
