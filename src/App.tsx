@@ -1,24 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import Accordion from "./components/Accordion";
+import Button from "./components/Button";
+import { fetchMockData } from "./api/api";
+import LoadingState from "./components/loadingstate/LoadingState";
 
 function App() {
+  const [questions, setQuestions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Add a loading state
+
+  useEffect(() => {
+    async function fetchData() {
+      const { products } = await fetchMockData();
+      const firstFourQuestions = products.slice(0, 4);
+
+      setQuestions(firstFourQuestions);
+      setIsLoading(false); // Set loading state to false when data is fetched
+    }
+
+    const loadingTimeout = setTimeout(() => {
+      fetchData();
+    }, 1000);
+
+    return () => clearTimeout(loadingTimeout); // Cleanup the timeout on unmount
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className=" flex items-center justify-center  min-h-screen">
+      <div className="flez flex-col max-w-[729px] w-full">
+        <h1 className="text-[24px] font-bold ">Veelgestelde vragen</h1>
+        {isLoading ? (
+          <LoadingState />
+        ) : questions.length ? (
+          <Accordion questions={questions} />
+        ) : (
+          "No data"
+        )}
+        <Button showArrow={true}> Bekijk alle vragen</Button>
+      </div>
     </div>
   );
 }
